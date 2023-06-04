@@ -42,7 +42,7 @@ if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
 app.set('port',process.env.PORT || 3000) 
 
 
-app.get('/api',async (req,res)=>{
+//app.get('/api',async (req,res)=>{
         let options={}
 
         if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
@@ -78,7 +78,7 @@ app.get('/api',async (req,res)=>{
     
 
        
-})
+//})
 
 
 app.listen(app.get('port'),()=>{
