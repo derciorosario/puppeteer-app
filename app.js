@@ -59,7 +59,7 @@ app.get('/',async (req,res)=>{
             }
         }
 
-        try{
+       
             
             const browser = await puppeteer.launch(options);
             const page = await browser.newPage();
@@ -71,13 +71,6 @@ app.get('/',async (req,res)=>{
             res.send({title:await page.title()})
             console.log('success')
             await browser.close()
-
-        }catch(e){
-            console.log('We have an error:',error)
-        }
-    
-
-       
 })
 
 
