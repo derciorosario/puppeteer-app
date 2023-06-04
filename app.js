@@ -27,15 +27,14 @@ const { error } = require('console');
 
 const app=require('express')()
 
-let chrome={}
+let chrome = {};
 let puppeteer;
 
-
-if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-    puppeteer = require('puppeteer-core');
-    chrome = require('chrome-aws-lambda');
-}else{
-    puppeteer = require('puppeteer');
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  chrome = require("chrome-aws-lambda");
+  puppeteer = require("puppeteer-core");
+} else {
+  puppeteer = require("puppeteer");
 }
 
 
@@ -45,38 +44,36 @@ app.set('port',process.env.PORT || 3000)
 app.get('/',async (req,res)=>{
         let options={}
 
-        if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-            options={
-                args:[...chrome.args,'--no-sandbox', '--disable-setuid-sandbox','--hide-scrollbars','--disable-web-security'],
-                executablePath:await chrome.executablePath,
-                defaultViewport:chrome.defaultViewport,
-                headless:true,
-                ignoreHTTPSErrors:true
-            }
-        }else{
+      if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+        options = {
+          args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+          defaultViewport: chrome.defaultViewport,
+          executablePath: await chrome.executablePath,
+          headless: true,
+          ignoreHTTPSErrors: true,
+        };
+      } else{
             options={
                 executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', // Replace with the actual path to Chrome
             }
-        }
+      }
 
        
-            
-            const browser = await puppeteer.launch(options);
-            const page = await browser.newPage();
-          
-            const url = "https://google.com";
-            await page.goto(url);
-            await page.setViewport({width: 1080, height: 1024});
-            
-            res.send({title:await page.title()})
-            console.log('success')
-            await browser.close()
+    try{        
+    const browser = await puppeteer.launch(options);
+    const page = await browser.newPage();
+    const url = "https://google.com";
+    await page.goto(url);
+    res.send({title:await page.title()})
+    }catch(e){
+        console.log('we have a error')
+    }
+    
+    
 })
 
 
-app.listen(app.get('port'),()=>{
-    console.log('server is running')
-})
+app.listen(app.get('port'))
 
 
 
