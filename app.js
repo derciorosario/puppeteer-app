@@ -66,7 +66,7 @@ app.get('/',async (req,res)=>{
     await page.goto(url);
     res.send({title:await page.title()})
     }catch(e){
-        console.log('we have am error',e)
+        console.log('we have an error',e)
     }
     
     
