@@ -66,6 +66,7 @@ app.get('/',async (req,res)=>{
     const url = "https://google.com";
     await page.goto(url);
     res.send({title:await page.title()})
+    await browser.close()
     }catch(e){
         console.log('we have an error',e)
     }
