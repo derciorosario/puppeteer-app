@@ -19,7 +19,7 @@ axios.get(url)
        console.log(error)
 });*/
 
-const { error } = require('console');
+
 
 
 
@@ -66,7 +66,7 @@ app.get('/',async (req,res)=>{
     await page.goto(url);
     res.send({title:await page.title()})
     }catch(e){
-        console.log('we have a error',e)
+        console.log('we have am error',e)
     }
     
     
